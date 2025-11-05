@@ -1,0 +1,39 @@
+{
+    // --- 1. PRETTIER Y FORMATO PRINCIPAL ---
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+
+    // --- 2. PRODUCTIVIDAD Y LIMPIEZA ---
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "editor.tabSize": 2,
+    "files.eol": "\n",
+
+    // --- 3. EXCLUSIONES ---
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "dist": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "dist": true
+    },
+
+    // --- 4. EVITAR CONFLICTOS CON NATIVO (Opcional, pero recomendado) ---
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    }
+}
