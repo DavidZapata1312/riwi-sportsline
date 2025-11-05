@@ -6,6 +6,15 @@ El objetivo principal de esta épica es modernizar y reestructurar la plataforma
 
 ---
 
+## Estructura del proyecto
+
+El repositorio está organizado en dos directorios principales:
+
+* **`e-commerce-sport-line/`**: Contiene toda la **documentación, planificación y archivos de configuración de ejemplo** utilizados durante el segundo *sprint* de desarrollo. 
+* **`enunciado/`**: Contiene el **código fuente completo** del proyecto.
+
+---
+
 ## Tecnologías utilizadas
 
 El backend del e-commerce Riwi SportsLine ha sido migrado y desarrollado utilizando las siguientes tecnologías y herramientas clave:
@@ -17,15 +26,6 @@ El backend del e-commerce Riwi SportsLine ha sido migrado y desarrollado utiliza
 * Autenticación Avanzada: OAuth, x-api-key
 * Control de Calidad: Jest
 * Estructura de Datos: DTOs (Data Transfer Objects)
-
----
-
-## Estructura del proyecto
-
-El repositorio está organizado en dos directorios principales:
-
-* **`e-commerce-sport-line/`**: Contiene toda la **documentación, planificación y archivos de configuración de ejemplo** utilizados durante el segundo *sprint* de desarrollo. 
-* **`enunciado/`**: Contiene el **código fuente completo** del proyecto.
 
 ---
 
@@ -72,6 +72,34 @@ Asegúrate de tener instalados:
     ```bash
     npm run start:dev
     ```
+
+---
+
+## Descripción de la historia de usuario
+
+HU-1: Fundamentos de NestJS y migración del setup base
+
+### Criterios de aceptación
+
+* Proyecto creado con Nest CLI e inicializado desde el fork de GitHub.
+
+* Integración de TypeScript, ESLint, Prettier y configuración de entorno (.env) bajo buenas prácticas.
+
+* Migración del setup de conexión a PostgreSQL con TypeORM (sin necesidad de entidades aún).
+
+* Validación del arranque del servidor con variables de entorno administradas mediante el ConfigModule.
+
+---
+
+## Comandos útiles
+
+| Comando             | Descripción                                          |
+| ------------------- | ---------------------------------------------------- |
+| `npm run start`     | Inicia el servidor NestJS                            |
+| `npm run start:dev` | Inicia el servidor en modo desarrollo con hot-reload |
+| `npm run lint`      | Analiza y corrige errores de estilo                  |
+| `npm run format`    | Aplica formato Prettier a todo el proyecto           |
+| `npm run build`     | Compila el proyecto para producción                  |
 
 ---
 
