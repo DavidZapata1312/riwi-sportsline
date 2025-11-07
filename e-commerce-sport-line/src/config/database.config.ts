@@ -9,6 +9,6 @@ export const getTypeOrmConfig = (configServie: ConfigService): TypeOrmModuleOpti
   password: configServie.get<string>('DB_PASSWORD'),
   database: configServie.get<string>('DB_DATABASE'),
   autoLoadEntities: true,
-  synchronize: configServie.get<string>('NODE_ENV') !== 'production',
+  // synchronize: configServie.get<string>('NODE_ENV') !== 'production',
   logging: configServie.get<string>('NODE_ENV') !== 'production',
 });
