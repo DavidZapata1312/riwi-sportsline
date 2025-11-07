@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    /* ... Otras opciones de la Configuración 2 ... */
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "resolvePackageJsonExports": true,
@@ -13,7 +14,14 @@
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+
+    // 👇 AJUSTES PARA RUTAS ABSOLUTAS
+    "baseUrl": "./", // Define la raíz como la carpeta del tsconfig.json
+    "paths": {
+      "src/*": ["src/*"] // Mapea cualquier importación que empiece por 'src/' a la carpeta 'src' real.
+    },
+    // 👆 FIN AJUSTES PARA RUTAS ABSOLUTAS
+
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -21,5 +29,8 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  
+  // 💡 Recomendación: Añadir 'include' si falta para que el compilador sepa qué archivos procesar
+  "include": ["src/**/*.ts", "test/**/*.ts"]
 }
