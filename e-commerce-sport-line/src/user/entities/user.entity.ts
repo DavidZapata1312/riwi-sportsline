@@ -1,15 +1,12 @@
+import * as bcrypt from 'bcrypt';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  OneToMany,
   BeforeInsert,
   BeforeUpdate,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Client } from 'src/client/entities/client.entity';
-import { Product } from 'src/product/entities/product.entity';
-import * as bcrypt from 'bcrypt';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -36,14 +33,6 @@ export class User {
     default: UserRole.USER,
   })
   role: UserRole;
-
-  // 🔹 Relación con Client
-  @OneToMany(() => Client, (client) => client.user)
-  clients: Client[];
-
-  // 🔹 Relación con Product
-  @OneToMany(() => Product, (product) => product.user)
-  products: Product[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
