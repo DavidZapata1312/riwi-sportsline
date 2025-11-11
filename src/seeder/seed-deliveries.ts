@@ -1,8 +1,9 @@
-import { Delivery } from '../delivery/entities/delivery.entity';
-import { DataSource } from 'typeorm';
-import { User } from '../user/entities/user.entity';
-import { Client } from '../client/entities/client.entity';
-import { Product } from '../product/entities/product.entity';
+import {Delivery} from '../delivery/entities/delivery.entity';
+import {DataSource} from 'typeorm';
+import {User} from '../user/entities/user.entity';
+import {Client} from '../client/entities/client.entity';
+import {Product} from '../product/entities/product.entity';
+import {DeliveryStatus} from '../delivery/deliveries.enum';
 
 export async function seedDeliveries(
     dataSource: DataSource,
@@ -14,19 +15,19 @@ export async function seedDeliveries(
 
     const deliveriesData = [
         {
-            status: 'pending',
+            status: DeliveryStatus.PENDING,
             user: users[0],
             client: clients[0],
             products: [products[0], products[1]],
         },
         {
-            status: 'in_transit',
+            status: DeliveryStatus.CANCELLED,
             user: users[1],
             client: clients[1],
             products: [products[2]],
         },
         {
-            status: 'delivered',
+            status: DeliveryStatus.DELIVERED,
             user: users[2],
             client: clients[2],
             products: [products[0], products[2]],

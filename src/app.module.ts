@@ -1,28 +1,33 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { LoggerMiddleware } from "./common/middlewares/logger.middleware";
 import { DeliveryModule } from './delivery/delivery.module';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { ClientModule } from './client/client.module';
 import { AppSourceData } from './config/db';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
-        // Carga de variables de entorno
         ConfigModule.forRoot({
-            isGlobal: true, // disponible en todos los módulos
+            isGlobal: true,
         }),
-
-        // Conexión a la base de datos
         TypeOrmModule.forRoot(AppSourceData),
-
-        // Módulos de la aplicación
         UserModule,
         ClientModule,
         ProductModule,
         DeliveryModule,
+        AuthModule,
     ],
+    controllers: [AppController],
+    providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(LoggerMiddleware).forRoutes('*');
+    }
+}

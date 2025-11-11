@@ -1,4 +1,5 @@
 import {Entity, Column, ManyToMany, JoinTable, ManyToOne} from 'typeorm';
+import {DeliveryStatus} from "../deliveries.enum";
 import { baseEntity } from '../../shared/base.entity';
 import { Client } from '../../client/entities/client.entity';
 import { User } from '../../user/entities/user.entity';
@@ -16,10 +17,12 @@ export class Delivery extends baseEntity {
     @Column({ nullable: true })
     notes?: string;
 
+    @Column({ type: 'enum', enum: DeliveryStatus, default: DeliveryStatus.PENDING })
+    status: DeliveryStatus;
+
     @ManyToOne(() => Client, (client) => client.deliveries, { eager: true, onDelete: 'CASCADE' })
     client: Client;
 
-    // RELACIÓN: muchos deliveries tienen muchos productos
     @ManyToMany(() => Product, (product) => product.deliveries, { cascade: true })
     @JoinTable({
         name: 'delivery_products',
@@ -28,7 +31,7 @@ export class Delivery extends baseEntity {
     })
     products: Product[];
 
-    // RELACIÓN: un user puede gestionar muchos deliveries
+
     @ManyToOne(() => User, (user) => user.deliveries, { eager: true, onDelete: 'SET NULL' })
     user: User;
 }
