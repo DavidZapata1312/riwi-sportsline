@@ -11,7 +11,6 @@ export async function seedClients(clientRepository: Repository<Client>, users: U
       name: faker.person.fullName(),
       email: faker.internet.email().toLowerCase(),
       phone: faker.phone.number(),
-      user: faker.helpers.arrayElement(users),
     });
     clients.push(client);
   }

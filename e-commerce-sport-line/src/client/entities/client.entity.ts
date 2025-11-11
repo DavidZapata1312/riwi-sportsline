@@ -1,14 +1,5 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-  CreateDateColumn,
-  JoinColumn,
-} from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
 import { Order } from 'src/order/entities/order.entity';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'clients' })
 export class Client {
@@ -24,13 +15,6 @@ export class Client {
   @Column({ nullable: true })
   phone: string;
 
-  @ManyToOne(() => User, (user) => user.clients, {
-    onDelete: 'CASCADE', // Si se elimina el usuario, se eliminan sus clientes
-  })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
-
-  // 🔹 1:N → un cliente puede tener muchos pedidos
   @OneToMany(() => Order, (order) => order.client)
   orders: Order[];
 

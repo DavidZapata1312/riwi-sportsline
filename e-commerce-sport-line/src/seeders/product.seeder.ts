@@ -16,7 +16,6 @@ export async function seedProducts(
       description: faker.commerce.productDescription(),
       price: parseFloat(faker.commerce.price({ min: 10, max: 200 })),
       stock: faker.number.int({ min: 0, max: 100 }),
-      user: faker.helpers.arrayElement(users),
     });
     products.push(product);
   }

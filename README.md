@@ -68,10 +68,56 @@ Asegúrate de tener instalados:
     CREATE DATABASE e_commerce;
     ```
 
-5.  Ejecuta la aplicación:
+5. Ejecutar las migraciones para crear las tablas base en la base de datos:
+
+    ```bash
+    npm run migration:run
+    ```
+    Si realizas cambios en las entidades, puedes generar nuevas migraciones con:
+    ```bash
+    npm run migration:generate
+    ```
+
+6. Ejecutar los seeders para insertar datos iniciales en la base de datos:
+
+    ```bash
+    npm run seed
+    ```
+
+7.  Para levantar el servidor en modo desarrollo:
     ```bash
     npm run start:dev
     ```
+---
+
+## Estructura del proyecto
+
+```
+src/
+├── config/
+│ └── database.config.ts
+├── migrations/
+│ └── 1762397913828-InitSchema.ts
+├── seeders/
+│ ├── user.seeder.ts
+│ ├── client.seeder.ts
+│ ├── product.seeder.ts
+│ ├── order.seeder.ts
+│ ├── order-detail.seeder.ts
+│ └── index.ts
+├── repositories/
+│ └── user.repository.ts
+├── user/
+│ └── entities/user.entity.ts
+├── client/
+│ └── entities/client.entity.ts
+├── product/
+│ └── entities/product.entity.ts
+├── order/
+│ └── entities/order.entity.ts
+├── app.module.ts
+└── main.ts
+```
 
 ---
 
@@ -91,6 +137,30 @@ HU-1: Fundamentos de NestJS y migración del setup base
 
 ---
 
+## Descripci+on de la historia de usuario
+
+HU-2:  Historia de Usuario: Integración de ORM y persistencia con TypeORM
+
+### Criterios de aceptación
+
+* Migrar modelos de Sequelize a entidades de TypeORM. 
+* Configurar las relaciones entre entidades. 
+* Implementar migraciones y seeds iniciales. 
+* Validar consultas básicas desde los servicios.
+
+
+
+---
+
+## 🧠 Notas técnicas
+
+- Se configuró `TypeORM` con `ConfigModule` para manejar variables de entorno.
+- Las migraciones se generan con `ts-node` y se ejecutan sin necesidad de compilar el proyecto.
+- Los seeders utilizan `@faker-js/faker` para generar datos aleatorios.
+- Los repositorios personalizados encapsulan la lógica de acceso a datos y facilitan su uso futuro en los servicios NestJS.
+
+---
+
 ## Comandos útiles
 
 | Comando             | Descripción                                          |
@@ -100,6 +170,9 @@ HU-1: Fundamentos de NestJS y migración del setup base
 | `npm run lint`      | Analiza y corrige errores de estilo                  |
 | `npm run format`    | Aplica formato Prettier a todo el proyecto           |
 | `npm run build`     | Compila el proyecto para producción                  |
+| `npm run m*:g*`     | Generar esquema de migración                         |
+| `npm run m*:r*`     | Crear tablas en la base de datos segun el esquema    |
+| `npm run seed`      | Alimentar tabla con datos aleatorios                 |
 
 ---
 
