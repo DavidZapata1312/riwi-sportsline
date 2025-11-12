@@ -32,5 +32,5 @@
   },
   
   // 💡 Recomendación: Añadir 'include' si falta para que el compilador sepa qué archivos procesar
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "jest.config.ts"]
 }
