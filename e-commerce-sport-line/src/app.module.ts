@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getTypeOrmConfig } from './config/database.config';
@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { ClientModule } from './client/client.module';
+import { AuditMiddleware } from './common/middleware/audit.Middleware';
 
 @Module({
   imports: [
@@ -21,4 +22,8 @@ import { ClientModule } from './client/client.module';
     ClientModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuditMiddleware).forRoutes('*');
+  }
+}
