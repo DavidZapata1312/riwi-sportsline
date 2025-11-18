@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { HttpExceptionFilter } from './common/filter/http-exception.filter';
+import { TimeInterceptor } from './common/interceptor/time.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +12,9 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, transform: true, forbidNonWhitelisted: true }),
   );
+
+  app.useGlobalInterceptors(new TimeInterceptor());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const port = configService.get<number>('PORT') || 3002;
 
