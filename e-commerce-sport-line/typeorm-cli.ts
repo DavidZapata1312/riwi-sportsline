@@ -5,6 +5,8 @@ import { OrderDetail } from './src/order/entities/order-detail.entity';
 import { Order } from './src/order/entities/order.entity';
 import { Product } from './src/product/entities/product.entity';
 import { User } from './src/user/entities/user.entity';
+import { Permission } from 'src/permission/entities/permission.entity';
+import { Role } from 'src/user/entities/role.entity';
 
 config(); // Carga el .env
 
@@ -15,6 +17,13 @@ export default new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  entities: [User, Client, Product, Order, OrderDetail],
+  entities: [User, Client, Product, Order, OrderDetail, Permission, Role],
   migrations: ['src/migrations/*.ts'], // dónde guardas tus migraciones compiladas
+});
+
+console.log('TYPEORM->', {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USERNAME,
+  db: process.env.DB_DATABASE,
 });

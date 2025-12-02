@@ -1,29 +1,36 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto /create-user.dto';
-import { RolesGuard } from 'src/common/guard/roles.guard';
+import { JwtAuthGuard } from '../common/guard/jwt-auth.guard';
+import { RolesGuard } from '../common/guard/roles.guard';
+import { PermissionsGuard } from 'src/common/guard/permissions.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
+import { Permissions } from 'src/common/decorators/permissions.decorator';
 
 @Controller('user')
+@UseGuards(JwtAuthGuard) // protección global del controlador
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Roles('admin')
-  @UseGuards(RolesGuard)
+  @Permissions('user.create')
+  @UseGuards(RolesGuard, PermissionsGuard)
   @Post()
   create(@Body() dto: CreateUserDto) {
     return this.userService.create(dto);
   }
 
   @Roles('admin')
-  @UseGuards(RolesGuard)
+  @Permissions('user.read.one')
+  @UseGuards(RolesGuard, PermissionsGuard)
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.userService.findOne(id);
   }
 
   @Roles('admin')
-  @UseGuards(RolesGuard)
+  @Permissions('user.read.all')
+  @UseGuards(RolesGuard, PermissionsGuard)
   @Get()
   findAll() {
     return this.userService.findAll();

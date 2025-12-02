@@ -1,10 +1,14 @@
 import * as bcrypt from 'bcrypt';
+import { Permission } from '../../permission/entities/permission.entity';
+import { Role } from './role.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -34,8 +38,19 @@ export class User {
   })
   role: UserRole;
 
+  @Column({ type: 'text', name: 'current_hashed_refresh_token', nullable: true, select: false })
+  currentHashedRefreshToken?: string | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
+
+  @ManyToMany(() => Role, (role) => role.users)
+  @JoinTable() // se pone en un lado
+  roles: Role[];
+
+  @ManyToMany(() => Permission, (permission) => permission.users, { eager: true })
+  @JoinTable()
+  permissions: Permission[];
 
   @BeforeInsert()
   async hashPasswordInsert() {

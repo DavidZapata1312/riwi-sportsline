@@ -1,4 +1,5 @@
-import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@nestjs/common';
+/* eslint-disable */
+import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
@@ -10,27 +11,17 @@ export class RolesGuard implements CanActivate {
 
     if (!requiredRoles) return true;
 
-    // Obtener headers para simular el "usuario"
-    const request = context.switchToHttp().getRequest<{
-      user?: { id: number; role?: string };
-      headers: { role?: string };
-    }>();
+    const request = context.switchToHttp().getRequest();
+    const user = request.user; // viene del JWT
 
-    // Simulación: el rol viene por headers
-    const simulatedRole = request.headers.role;
+    if (!user) throw new ForbiddenException('Token missing');
 
-    // Simular creación del usuario (solo para semana 4)
-    const user = { id: 1, role: simulatedRole };
-    request.user = user;
+    // 👇 Ahora validamos contra roles cargados desde BD o JWT
+    const userRoles = user.roles?.map((r) => r.name) || [];
 
-    // Validación realista
-    if (!user.role) {
-      throw new ForbiddenException('Role not provided (use header role)');
-    }
+    const hasRole = requiredRoles.some((role) => userRoles.includes(role));
 
-    const isAllowed = requiredRoles.includes(user.role);
-
-    if (!isAllowed) {
+    if (!hasRole) {
       throw new ForbiddenException('You do not have permission');
     }
 
