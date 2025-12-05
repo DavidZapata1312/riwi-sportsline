@@ -39,7 +39,7 @@ export class AuthController {
     }
 
     @Get('google')
-    @UseGuards(PassportAuthGuard('google'))
+    // To re‑enable OAuth protection, add: @UseGuards(PassportAuthGuard('google'))
     @ApiOperation({ summary: 'Initiate Google OAuth2 login' })
     @ApiResponse({ status: 302, description: 'Redirect to Google OAuth2 consent screen.' })
     async googleAuth() {
@@ -47,7 +47,7 @@ export class AuthController {
     }
 
     @Get('google/callback')
-    @UseGuards(PassportAuthGuard('google'))
+    // To re‑enable OAuth protection, add: @UseGuards(PassportAuthGuard('google'))
     @ApiOperation({ summary: 'Google OAuth2 callback' })
     @ApiResponse({ status: 200, description: 'Google login successful, returns JWT.' })
     async googleAuthRedirect(@Req() req: any) {

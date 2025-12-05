@@ -7,13 +7,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthGuard } from './guards/auth.guard';
 import { PassportModule } from '@nestjs/passport';
 import { GoogleStrategy } from './strategies/google.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
 
 @Module({
     imports: [
         ConfigModule,
-        PassportModule.register({ session: false }),
+        PassportModule.register({ defaultStrategy: 'jwt', session: false }),
         TypeOrmModule.forFeature([User]),
         JwtModule.registerAsync({
             imports: [ConfigModule],
@@ -25,7 +26,9 @@ import { User } from '../user/entities/user.entity';
         }),
     ],
     controllers: [AuthController],
-    providers: [AuthService, AuthGuard, GoogleStrategy],
+    // To re‑enable Google OAuth, add GoogleStrategy back into providers
+    // To re‑enable JwtStrategy-based auth, add JwtStrategy back into providers
+    providers: [AuthService, AuthGuard],
 })
 export class AuthModule {
     configure(consumer: MiddlewareConsumer) {
